@@ -1,6 +1,6 @@
 <template>
   <div id="app" :dark-mode="darkMode">
-    <header>
+    <header :dark-mode="darkMode">
       <h1>Where in the world</h1>
       <button class="btn" @click="darkMode = !darkMode">
         <div v-if="darkMode == false">
@@ -13,13 +13,17 @@
         </div>
       </button>
     </header>
+    <main><country-card :dark-mode="darkMode"></country-card></main>
   </div>
 </template>
 
 <style lang="scss">
 $font: "Nunito Sans", sans-serif;
-$light-color: #fff;
-$dark-color: #2c3e50;
+$light-background: #f2f2f2;
+$white: #fff;
+$light-text: #111517;
+$dark-background: #202c36;
+$dark-elements: #2b3844;
 
 body {
   margin: 0;
@@ -28,11 +32,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: $font;
-  color: $dark-color;
+  color: $dark-background;
+  background-color: $light-background;
 }
 #app[dark-mode="true"] {
-  color: $light-color;
-  background-color: $dark-color;
+  color: $white;
+  background-color: $dark-background;
 }
 
 header {
@@ -42,7 +47,12 @@ header {
   align-items: center;
   /* offset-x | offset-y | blur-radius | spread-radius | color */
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.056);
+  background-color: #fff;
 }
+header[dark-mode="true"] {
+  background-color: $dark-elements;
+}
+
 button {
   height: 22px;
   background: none;
@@ -60,9 +70,17 @@ button {
   margin-right: 8px;
   transform: rotate(-20deg);
 }
+main {
+  height: 100vh;
+  margin: 48px 80px;
+}
 </style>
 <script>
+import CountryCard from "@/components/CountryCard.vue";
 export default {
+  components: {
+    CountryCard,
+  },
   data() {
     return {
       darkMode: false,
