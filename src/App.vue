@@ -13,7 +13,12 @@
         </div>
       </button>
     </header>
-    <main><country-card :dark-mode="darkMode"></country-card></main>
+    <main>
+      <country-card
+        :dark-mode="darkMode"
+        :country-data="countryData"
+      ></country-card>
+    </main>
   </div>
 </template>
 
@@ -76,6 +81,7 @@ main {
 }
 </style>
 <script>
+import axios from "axios";
 import CountryCard from "@/components/CountryCard.vue";
 export default {
   components: {
@@ -84,7 +90,23 @@ export default {
   data() {
     return {
       darkMode: false,
+      countryData: {},
     };
+  },
+  mounted() {
+    axios
+      .get("https://restcountries.com/v3.1/all")
+      .then((response) => {
+        this.countryData = response.data;
+        console.log(this.countryData);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
   },
 };
 </script>

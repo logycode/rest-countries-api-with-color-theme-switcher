@@ -20,6 +20,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    countryData: {
+      type: Object,
+      default: null,
+    },
   },
 };
 </script>
