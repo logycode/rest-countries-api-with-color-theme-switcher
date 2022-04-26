@@ -3,17 +3,17 @@
     <header :dark-mode="darkMode">
       <h1>Where in the world</h1>
       <button class="btn" @click="darkMode = !darkMode">
-        <div v-if="darkMode == false">
+        <div v-if="!darkMode">
           <font-awesome-icon icon="fa-regular fa-moon" />
           <span>Dark Mode</span>
         </div>
-        <div v-if="darkMode == true">
-          <font-awesome-icon v-if="darkMode == true" icon="fa-regular fa-sun" />
+        <div v-else>
+          <font-awesome-icon icon="fa-regular fa-sun" />
           <span>Light Mode</span>
         </div>
       </button>
     </header>
-    <main>
+    <main valid-v-for="country in countryData">
       <country-card
         :dark-mode="darkMode"
         :country-data="countryData"
@@ -77,7 +77,7 @@ button {
 }
 main {
   height: 100vh;
-  margin: 48px 80px;
+  margin: 80px 48px 0;
 }
 </style>
 <script>
@@ -90,7 +90,7 @@ export default {
   data() {
     return {
       darkMode: false,
-      countryData: {},
+      countryData: [],
     };
   },
   mounted() {

@@ -21,8 +21,7 @@ export default {
       default: false,
     },
     countryData: {
-      type: Object,
-      default: null,
+      type: Array,
     },
   },
 };
