@@ -28,18 +28,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$white: #fff;
-$light-text: #111517;
-$dark-elements: #2b3844;
-
 #component {
   width: 264px;
   height: 336px;
-  background-color: $white;
-  border-radius: 5px;
-}
-#component[dark-mode="true"] {
-  background-color: $dark-elements;
+  background-color: var(--secondary-background);
+  color: var(--text);
+  border-radius: var(--border-radius);
 }
 .flag {
   height: 40%;

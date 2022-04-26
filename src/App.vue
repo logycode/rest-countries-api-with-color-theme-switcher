@@ -13,36 +13,55 @@
         </div>
       </button>
     </header>
-    <main valid-v-for="country in countryData">
+    <main>
+      <div class="searchbar">
+        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+        <input type="text" placeholder="Search for a country..." />
+      </div>
+      <select name="region" id="region">
+        <option value="filter">Filter by Region</option>
+        <option value="africe">Africa</option>
+        <option value="america">America</option>
+        <option value="asia">Asia</option>
+        <option value="europe">Europe</option>
+        <option value="oceania">Cceania</option>
+      </select>
+    </main>
+    <!-- main valid-v-for="country in countryData">
       <country-card
         :dark-mode="darkMode"
         :country-data="countryData"
       ></country-card>
-    </main>
+    </main-->
   </div>
 </template>
 
 <style lang="scss">
-$font: "Nunito Sans", sans-serif;
-$light-background: #f2f2f2;
-$white: #fff;
-$light-text: #111517;
-$dark-background: #202c36;
-$dark-elements: #2b3844;
-
-body {
-  margin: 0;
-}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: $font;
-  color: $dark-background;
-  background-color: $light-background;
+
+  // variables
+  --font: "Nunito Sans", sans-serif;
+  --background: #f2f2f2;
+  --text: #111517;
+  --secondary-background: #fff;
+  --box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.056);
+  --border-radius: 5px;
+
+  // init
+  font-family: var(--font);
+  color: var(--text);
+  background-color: var(--background);
 }
 #app[dark-mode="true"] {
-  color: $white;
-  background-color: $dark-background;
+  --background: #202c36;
+  --secondary-background: #2b3844;
+  --text: #fff;
+  --secondary-text: #848484;
+}
+body {
+  margin: 0;
 }
 
 header {
@@ -51,11 +70,11 @@ header {
   justify-content: space-between;
   align-items: center;
   /* offset-x | offset-y | blur-radius | spread-radius | color */
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.056);
-  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  background-color: var(--secondary-background);
 }
 header[dark-mode="true"] {
-  background-color: $dark-elements;
+  background-color: var(--secondary-background);
 }
 
 button {
@@ -77,15 +96,52 @@ button {
 }
 main {
   height: 100vh;
-  margin: 80px 48px 0;
+  margin: 80px 80px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  width: 480px-32px-32px;
+  height: 56px-19px-19px;
+  padding: 19px 32px;
+  background-color: var(--secondary-background);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  color: var(--secondary-text);
+}
+.searchbar .svg-inline--fa {
+  width: 18px;
+  height: 18px;
+  transform: rotate(0deg);
+  color: #848484;
+}
+input {
+  margin-left: 24px;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+select {
+  height: 56px;
+  width: 200px-18px;
+  border: none;
+  padding: 18px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  font-family: inherit;
+  font-size: 14px;
 }
 </style>
 <script>
 import axios from "axios";
-import CountryCard from "@/components/CountryCard.vue";
+// import CountryCard from "@/components/CountryCard.vue";
 export default {
   components: {
-    CountryCard,
+    // CountryCard,
   },
   data() {
     return {
