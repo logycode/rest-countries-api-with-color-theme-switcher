@@ -14,25 +14,25 @@
       </button>
     </header>
     <main>
-      <div class="searchbar">
-        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-        <input type="text" placeholder="Search for a country..." />
-      </div>
-      <select name="region" id="region">
-        <option value="filter">Filter by Region</option>
-        <option value="africe">Africa</option>
-        <option value="america">America</option>
-        <option value="asia">Asia</option>
-        <option value="europe">Europe</option>
-        <option value="oceania">Cceania</option>
-      </select>
-    </main>
-    <!-- main valid-v-for="country in countryData">
+      <section>
+        <div class="searchbar">
+          <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+          <input type="text" placeholder="Search for a country..." />
+        </div>
+        <select name="region" id="region">
+          <option value="filter">Filter by Region</option>
+          <option value="africe">Africa</option>
+          <option value="america">America</option>
+          <option value="asia">Asia</option>
+          <option value="europe">Europe</option>
+          <option value="oceania">Cceania</option>
+        </select>
+      </section>
       <country-card
         :dark-mode="darkMode"
         :country-data="countryData"
       ></country-card>
-    </main-->
+    </main>
   </div>
 </template>
 
@@ -48,6 +48,7 @@
   --secondary-background: #fff;
   --box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.056);
   --border-radius: 5px;
+  --secondary-text: #848484;
 
   // init
   font-family: var(--font);
@@ -58,7 +59,7 @@
   --background: #202c36;
   --secondary-background: #2b3844;
   --text: #fff;
-  --secondary-text: #848484;
+  --secondary-text: #fff;
 }
 body {
   margin: 0;
@@ -98,9 +99,13 @@ main {
   height: 100vh;
   margin: 80px 80px 0;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
-
+section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
 .searchbar {
   display: flex;
   align-items: center;
@@ -116,7 +121,7 @@ main {
   width: 18px;
   height: 18px;
   transform: rotate(0deg);
-  color: #848484;
+  color: inherit;
 }
 input {
   margin-left: 24px;
@@ -124,6 +129,11 @@ input {
   outline: none;
   font-family: inherit;
   font-size: inherit;
+  background-color: var(--secondary-background);
+  color: inherit;
+}
+input::placeholder {
+  color: inherit;
 }
 select {
   height: 56px;
@@ -134,14 +144,16 @@ select {
   box-shadow: var(--box-shadow);
   font-family: inherit;
   font-size: 14px;
+  background-color: var(--secondary-background);
+  color: inherit;
 }
 </style>
 <script>
 import axios from "axios";
-// import CountryCard from "@/components/CountryCard.vue";
+import CountryCard from "@/components/CountryCard.vue";
 export default {
   components: {
-    // CountryCard,
+    CountryCard,
   },
   data() {
     return {
