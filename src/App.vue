@@ -28,10 +28,28 @@
           <option value="oceania">Cceania</option>
         </select>
       </section>
-      <country-card
-        :dark-mode="darkMode"
-        :country-data="countryData"
-      ></country-card>
+      <div class="row">
+        <div id="component" v-for="(c, index) in countryData" :key="index">
+          <div class="flag">
+            <img :src="c.flags.png" :alt="`${c.name.common} flag`" />
+          </div>
+          <div class="country-info">
+            <h1>{{ c.name.common }}</h1>
+            <p>
+              <span><b>Population:</b> {{ c.population }} </span>
+              <span><b>Region:</b> {{ c.region }} </span>
+              <span v-if="c.capital"
+                ><b>Capital: </b>
+                <a
+                  :href="`https://www.google.com/maps/place/${c.name.common}`"
+                  target="new"
+                  >{{ c.capital[0] }}</a
+                ></span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 </template>
@@ -96,7 +114,7 @@ button {
   transform: rotate(-20deg);
 }
 main {
-  height: 100vh;
+  min-height: 100vh;
   margin: 80px 80px 0;
   display: flex;
   flex-direction: column;
@@ -147,14 +165,49 @@ select {
   background-color: var(--secondary-background);
   color: inherit;
 }
+#component {
+  width: 264px;
+  // height: 336px;
+  background-color: var(--secondary-background);
+  color: var(--text);
+  border-radius: var(--border-radius);
+  margin-bottom: 2.5%;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 -1%;
+
+  // 1. you can use grid
+  // 2. you can set a negative margin for the parent element
+
+  > * {
+    flex: 0 0 23%;
+    margin: 0 1%;
+  }
+}
+.flag {
+  img {
+    width: 100%;
+    height: 200px;
+    display: block;
+  }
+}
+.country-info {
+  padding: 24px;
+}
+p {
+  display: flex;
+  flex-direction: column;
+}
 </style>
 <script>
 import axios from "axios";
-import CountryCard from "@/components/CountryCard.vue";
 export default {
-  components: {
-    CountryCard,
-  },
+  name: "App",
   data() {
     return {
       darkMode: false,
