@@ -36,7 +36,7 @@
           <div class="country-info">
             <h1>{{ c.name.common }}</h1>
             <p>
-              <span><b>Population:</b> {{ c.population }} </span>
+              <span><b>Population:</b> {{ population(c.population) }} </span>
               <span><b>Region:</b> {{ c.region }} </span>
               <span v-if="c.capital"
                 ><b>Capital: </b>
@@ -213,6 +213,11 @@ export default {
       darkMode: false,
       countryData: [],
     };
+  },
+  methods: {
+    population(number) {
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
   mounted() {
     axios
