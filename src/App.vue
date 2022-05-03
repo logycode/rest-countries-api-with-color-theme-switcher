@@ -17,19 +17,23 @@
       <section>
         <div class="searchbar">
           <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-          <input type="text" placeholder="Search for a country..." />
+          <input
+            type="text"
+            v-model="searchString"
+            placeholder="Search for a country..."
+          />
         </div>
-        <select name="region" id="region">
-          <option value="filter">Filter by Region</option>
-          <option value="africe">Africa</option>
-          <option value="america">America</option>
-          <option value="asia">Asia</option>
-          <option value="europe">Europe</option>
-          <option value="oceania">Cceania</option>
+        <select name="region" id="region" v-model="selectedRegion">
+          <option value="">Filter by Region</option>
+          <option value="Africa">Africa</option>
+          <option value="Americas">America</option>
+          <option value="Asia">Asia</option>
+          <option value="Europe" selected>Europe</option>
+          <option value="Oceania">Cceania</option>
         </select>
       </section>
       <div class="row">
-        <div id="component" v-for="(c, index) in countryData" :key="index">
+        <div id="component" v-for="(c, index) in showCountries" :key="index">
           <div class="flag">
             <img :src="c.flags.png" :alt="`${c.name.common} flag`" />
           </div>
@@ -44,8 +48,8 @@
                   :href="`https://www.google.com/maps/place/${c.name.common}`"
                   target="new"
                   >{{ c.capital[0] }}</a
-                ></span
-              >
+                >
+              </span>
             </p>
           </div>
         </div>
@@ -67,6 +71,7 @@
   --box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.056);
   --border-radius: 5px;
   --secondary-text: #848484;
+  --link-color: #3686c9;
 
   // init
   font-family: var(--font);
@@ -78,6 +83,7 @@
   --secondary-background: #2b3844;
   --text: #fff;
   --secondary-text: #fff;
+  --link-color: #369dc9;
 }
 body {
   margin: 0;
@@ -203,6 +209,15 @@ p {
   display: flex;
   flex-direction: column;
 }
+a,
+a:visited,
+a:active {
+  color: var(--link-color);
+  font-weight: bold;
+}
+a:hover {
+  text-decoration: none;
+}
 </style>
 <script>
 import axios from "axios";
@@ -212,9 +227,60 @@ export default {
     return {
       darkMode: false,
       countryData: [],
+      selectedRegion: "",
+      searchString: "",
     };
   },
+  computed: {
+    // Use computed properties once you need to return a value
+    // filteredCountries() {
+    //   if (this.selectedRegion === "" && this.countryEntered === "") {
+    //     return this.countryData;
+    //   } else if (this.selectedRegion !== "") {
+    //     return this.countryData.filter(
+    //       (item) =>
+    //         item.region === this.selectedRegion &&
+    //         item.name.common === this.countryEntered
+    //     );
+    //   } else {
+    //     return this.countryData;
+    //   }
+    // },
+    showCountries() {
+      /*   if (this.selectedRegion === "") {
+        this.countryData;
+      }
+      return this.countryEntered !== ""
+        ? this.filteredCountriesBySearch
+        : this.filteredCountriesByRegion;
+    },
+    filteredCountriesByRegion() {
+      return this.countryData.filter(
+        (item) => item.region === this.selectedRegion
+      );
+    },
+    filteredCountriesBySearch() {
+      return this.countryData.filter(
+        (item) => item.region === this.selectedRegion
+      ); */
+      if (this.selectedRegion !== "") {
+        if (this.searchString !== "") {
+          return this.countryData.filter(
+            (item) =>
+              item.region === this.selectedRegion &&
+              item.name.common === this.searchString
+          );
+        }
+        return this.countryData.filter(
+          (item) => item.region === this.selectedRegion
+        );
+      } else {
+        return this.countryData;
+      }
+    },
+  },
   methods: {
+    // computed properties dont work with parameters I assume
     population(number) {
       return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
@@ -224,7 +290,6 @@ export default {
       .get("https://restcountries.com/v3.1/all")
       .then((response) => {
         this.countryData = response.data;
-        console.log(this.countryData);
       })
       .catch(function (error) {
         // handle error
